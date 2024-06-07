@@ -110,8 +110,8 @@ if __name__ == '__main__':
         #            changing_region_words=[["", ""], ["", "sleeves"], ["", "belt"]]),
 
         ## "reweight" examples
-        # PromptInfo(prompts=["A face with moustache and smile"] * 3,
-        #            token_ind=2,
+        # PromptInfo(prompts=["An emoji face with moustache and smile"] * 3,
+        #            token_ind=3,
         #            changing_region_words=[["", ""], ["moustache", "moustache"], ["smile", "smile"]],
         #            reweight_word=["moustache", "smile"],
         #            reweight_weight=[-1.0, 3.0]),
