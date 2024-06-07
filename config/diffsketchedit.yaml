@@ -1,0 +1,75 @@
+seed: 1
+image_size: 224
+mask_object: False # if the target image contains background, it's better to mask it out
+fix_scale: False  # if the target image is not squared, it is recommended to fix the scale
+
+# train
+num_iter: 1000
+batch_size: 1
+num_stages: 1 # training stages, you can train x strokes, then freeze them and train another x strokes etc
+lr_scheduler: False
+lr_decay_rate: 0.1
+decay_steps: [ 1000, 1500 ]
+lr: 1
+color_lr: 0.01
+pruning_freq: 50
+color_vars_threshold: 0.1
+width_lr: 0.1
+max_width: 50 # stroke width
+
+# stroke attrs
+num_paths: 96 # number of strokes
+width: 1.0 # stroke width
+control_points_per_seg: 4
+num_segments: 1
+optim_opacity: True # if True, the stroke opacity is optimized
+optim_width: False  # if True, the stroke width is optimized
+optim_rgba: False # if True, the stroke RGBA is optimized
+opacity_delta: 0 # stroke pruning
+
+# init strokes
+attention_init: True # if True, use the attention heads of Dino model to set the location of the initial strokes
+xdog_intersec: True # initialize along the edge, mix XDoG and attn up
+softmax_temp: 0.5
+cross_attn_res: 16
+self_attn_res: 32
+max_com: 20 # select the number of the self-attn maps
+mean_comp: False # the average of the self-attn maps
+comp_idx: 0 # if mean_comp==False, indicates the index of the self-attn map
+attn_coeff: 1.0 # attn fusion, w * cross-attn + (1-w) * self-attn
+log_cross_attn: False # True if cross attn every step
+u2net_path: "./checkpoint/u2net/u2net.pth"
+
+# ldm
+model_id: "sd14"
+ldm_speed_up: False
+enable_xformers: False
+gradient_checkpoint: False
+#token_ind: 1 # the index of CLIP prompt embedding, start from 1
+use_ddim: True
+num_inference_steps: 50
+guidance_scale: 7.5 # sdxl default 5.0
+# ASDS loss
+sds:
+  crop_size: 512
+  augmentations: "affine"
+  guidance_scale: 100
+  grad_scale: 1e-5
+  t_range: [ 0.05, 0.95 ]
+  warmup: 0
+
+clip:
+  model_name: "RN101"  # RN101, ViT-L/14
+  feats_loss_type: "l2" # clip visual loss type, conv layers
+  feats_loss_weights: [ 0,0,1.0,1.0,0 ] # RN based
+  #  feats_loss_weights: [ 0,0,1.0,1.0,0,0,0,0,0,0,0,0 ] # ViT based
+  fc_loss_weight: 0.1 # clip visual loss, fc layer weight
+  augmentations: "affine" # augmentation before clip visual computation
+  num_aug: 4 # num of augmentation before clip visual computation
+  vis_loss: 1 # 1 or 0 for use or disable clip visual loss
+  text_visual_coeff: 0 # cosine similarity between text and img
+
+perceptual:
+  name: "lpips" # dists
+  lpips_net: 'vgg'
+  coeff: 0.2
