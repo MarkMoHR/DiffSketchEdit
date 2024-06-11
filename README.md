@@ -105,7 +105,7 @@ If you use the code please cite:
 ```
 @inproceedings{mo2024text,
   title={Text-based Vector Sketch Editing with Image Editing Diffusion Prior},
-  author={Mo, Haoran and Gao, Chengying and Wang, Ruomei},
+  author={Mo, Haoran and Lin, Xusheng and Gao, Chengying and Wang, Ruomei},
   booktitle={2024 IEEE International Conference on Multimedia and Expo (ICME)},
   pages={1--6},
   year={2024},
